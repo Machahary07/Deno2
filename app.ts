@@ -50,3 +50,22 @@ function isPrefixOfWord(sentence: string, searchWord: string): number {
 }
 
 console.log(isPrefixOfWord('I love typescript with deno2','typescript'));
+
+// -------------leetcode dec 3
+
+function addSpaces(s: string, spaces: number[]): string {
+    const result: string[] = [];
+    let spaceIndex = 0;
+
+    for (let i = 0; i < s.length; i++) {
+        if (spaceIndex < spaces.length && i === spaces[spaceIndex]) {
+        result.push(" ");
+        spaceIndex++;
+        }
+        result.push(s[i]);
+    }
+
+    return result.join("");
+}
+
+console.log("Hello", addSpaces('ILoveDeno2', [1, 5, 9]))
