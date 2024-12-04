@@ -69,3 +69,22 @@ function addSpaces(s: string, spaces: number[]): string {
 }
 
 console.log("Hello", addSpaces('ILoveDeno2', [1, 5, 9]))
+
+// ---------------leetcode dec 4
+// cyclic increment
+
+function canMakeSubsequence(str1: string, str2: string): boolean {
+    let targetIndex = 0;
+    const targetLen = str2.length;
+
+    for (const currChar of str1) {
+        if (targetIndex < targetLen &&
+            (str2.charCodeAt(targetIndex) - currChar.charCodeAt(0) + 26) % 26 <= 1) {
+                targetIndex++;
+        }
+    }
+    return targetIndex === targetLen;
+};
+
+console.log(canMakeSubsequence('ab','d')) //gives false
+console.log(canMakeSubsequence('ab','c')) //gives true
