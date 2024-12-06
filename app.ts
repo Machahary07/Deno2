@@ -88,3 +88,61 @@ function canMakeSubsequence(str1: string, str2: string): boolean {
 
 console.log(canMakeSubsequence('ab','d')) //gives false
 console.log(canMakeSubsequence('ab','c')) //gives true
+
+// ----------------Leetcode dec 5
+//You are given two strings start and target, both of length n. 
+//Each string consists only of the characters 'L', 'R', and '_' where:
+//The characters 'L' and 'R' represent pieces, where a piece 'L' can move
+// to the left only if there is a blank space directly to its left, and a piece 'R' 
+//can move to the right only if there is a blank space directly to its right.
+//The character '_' represents a blank space that can be occupied by any of the 'L' or 'R' pieces.
+//Return true if it is possible to obtain the string target by moving the pieces of the string start any number of times. 
+//Otherwise, return false.
+function canChange(start: string, target: string): boolean {
+    if (start === target) return true;
+    let waitL = 0, waitR = 0;
+    
+    for (let i = 0; i < start.length; i++) {
+        const curr = start[i];
+        const goal = target[i];
+        
+        if (curr === 'R') {
+            if (waitL > 0) return false;
+            waitR++;
+        }
+        if (goal === 'L') {
+            if (waitR > 0) return false;
+            waitL++;
+        }
+        if (goal === 'R') {
+            if (waitR === 0) return false;
+            waitR--;
+        }
+        if (curr === 'L') {
+            if (waitL === 0) return false;
+            waitL--;
+        }
+    }
+    return waitL === 0 && waitR === 0;
+}
+
+// ----------------Leetcode dec 6
+function maxCount(banned: number[], n:number, maxSum: number): number { 
+    const bannedSet = new Set([...banned])
+    let sum = 0, count = 0
+
+    for (let i = 1; i <= n; i++) {
+        if (bannedSet.has(i)) {
+            continue
+        }
+        if (i + sum>maxSum) {
+            break
+        }
+        count++
+        sum += i
+    }
+    return count
+};
+
+console.log(maxCount([3,5,7,9],4,100))
+console.log(maxCount([1,6,5],5,6))
