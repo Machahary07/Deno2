@@ -146,3 +146,28 @@ function maxCount(banned: number[], n:number, maxSum: number): number {
 
 console.log(maxCount([3,5,7,9],4,100))
 console.log(maxCount([1,6,5],5,6))
+
+//-----------------------Leetcode dec 7
+
+function minimumSize(nums: number[], maxOperations: number): number {
+    let left = 1, right = Math.max(...nums);
+
+    while (left < right) {
+        const mid = (left + right) >> 1;
+        let operations = 0;
+
+        for (const balls of nums) {
+            operations += Math.floor((balls - 1) / mid);
+            if (operations > maxOperations) break;
+        }
+
+        if (operations <= maxOperations) {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return left;
+}
+
+console.log(minimumSize([9],2))
