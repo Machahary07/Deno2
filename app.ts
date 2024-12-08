@@ -144,8 +144,8 @@ function maxCount(banned: number[], n:number, maxSum: number): number {
     return count
 };
 
-console.log(maxCount([3,5,7,9],4,100))
-console.log(maxCount([1,6,5],5,6))
+console.log("maxCount of ([3,5,7,9],4,100): ",maxCount([3,5,7,9],4,100))
+console.log("maxCount of ([1,6,5],5,6): ",maxCount([1,6,5],5,6))
 
 //-----------------------Leetcode dec 7
 
@@ -170,4 +170,37 @@ function minimumSize(nums: number[], maxOperations: number): number {
     return left;
 }
 
-console.log(minimumSize([9],2))
+console.log("minimumSize of ([9],2): ",minimumSize([9],2))
+
+//-----------------------dec 8 leetcode (kinda hard)
+function maxTwoEvents(events: number[][]): number {
+
+    events.sort((a, b) => a[1] - b[1]);
+    let n = events.length;
+    let max = events[0][2];
+
+    for (let i = 1; i < n; i++) {
+        max = Math.max(max, events[i][2] + getMaxEventBefore(events[i][0], i - 1));
+        events[i][2] = Math.max(events[i][2], events[i - 1][2]);
+    }
+
+    return max;
+
+    function getMaxEventBefore(start: number, right: number) {
+        let left = 0;
+        let ans = 0;
+        while (left <= right) {
+            let mid = Math.floor(left + (right - left) / 2);
+            if (events[mid][1] >= start) {
+                right = mid - 1;
+            } else {
+                ans = Math.max(ans, events[mid][2]);
+                left = mid + 1;
+            }
+        }
+        return ans;
+    }
+
+};
+
+console.log("getMaxEventBefore [[1,3,2],[4,5,2],[2,4,3]]: ",maxTwoEvents([[1,3,2],[4,5,2],[2,4,3]]))
